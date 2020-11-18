@@ -28,6 +28,7 @@ setup(
     keywords='Maths GPU FAST',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
+    include_package_data=True,
     python_requires='>=3.5, <4',
     install_requires=[],
     extras_require={
