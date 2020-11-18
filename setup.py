@@ -6,12 +6,12 @@ with open(path.join(setup_file_location, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='python-template', # Change here
+    name='extreme_maths', # Change here
     version='0.0.1',
     description='',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/LiamDoult/python-template',
+    url='https://github.com/LiamDoult/extreme-maths-py',
     author='Liam Doult',
     author_email='liam.doult@gmail.com',
     classifiers=[
@@ -25,7 +25,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3 :: Only',
     ],
-    keywords='template repository development',
+    keywords='Maths GPU FAST',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     python_requires='>=3.5, <4',

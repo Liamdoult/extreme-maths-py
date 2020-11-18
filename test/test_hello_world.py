@@ -1,10 +1,10 @@
 import pytest
 
-from template import template_module
+from extreme_maths import template_module
 
 
 def test_main():
-    from template import __main__
+    from extreme_maths import __main__
 
 
 def test_hello_world():
