@@ -1,1 +1,1 @@
-recursive-include extreme_maths/ libem.so
+recursive-include src/ *.so
