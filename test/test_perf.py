@@ -1,4 +1,5 @@
 import collections
+import csv
 import time
 
 import torch
@@ -120,7 +121,7 @@ def color(row):
 
 
 def test_perf():
-    n = 8
+    n = 9
 
     results = score(n)
 
@@ -128,11 +129,17 @@ def test_perf():
 
     table_data = []
     table_data.append(["operation"] + ids)
-    table_data.append(["_gen_"] +
-                      color([results[id]["generation"] for id in ids]))
+    table_data.append(["_gen_"] + [results[id]["generation"] for id in ids])
     for op in operations:
         res = [results[id]["operations"][op.__name__] for id in ids]
-        table_data.append([op.__name__] + color(res))
+        table_data.append([op.__name__] + res)
+
+    with open(".results.csv", "w+") as my_csv:
+        csvWriter = csv.writer(my_csv, delimiter=',')
+        csvWriter.writerows(table_data)
+
+    table_data = [table_data[0]] + [[row[0]] + color(row[1:])
+                                    for row in table_data[1:]]
 
     table = terminaltables.AsciiTable(table_data)
     print(table.table)
