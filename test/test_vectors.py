@@ -179,5 +179,5 @@ class TestEMVectorOCL(TestEMVector):
     cls = EMVectorOCL
 
 
-# class TestEMVectorThreaded(TestEMVector):
-#    cls = EMVectorThreaded
+class TestEMVectorThreaded(TestEMVector):
+    cls = EMVectorThreaded
