@@ -108,7 +108,7 @@ def score(n):
 def color(row):
     best = 0
     worst = 0
-    for i, r in enumerate(row[1:]):
+    for i, r in enumerate(row):
         if r < row[best]:
             best = i
         if r > row[worst]:
@@ -121,7 +121,7 @@ def color(row):
 
 
 def test_perf():
-    n = 5
+    n = 9
 
     results = score(n)
 
