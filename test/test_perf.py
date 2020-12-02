@@ -121,7 +121,7 @@ def color(row):
 
 
 def test_perf():
-    n = 9
+    n = 5
 
     results = score(n)
 
