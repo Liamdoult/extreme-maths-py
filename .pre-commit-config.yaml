@@ -10,18 +10,3 @@ repos:
     rev: 'v0.30.0'
     hooks:
     -   id: yapf
-
--   repo: local
-    hooks:
-    -   id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
-        exclude: test/|setup.py
-
-# Comment out yapf and remove comments bellow for black support.
-# -   repo: https://github.com/psf/black
-#     rev: 19.3b0
-#     hooks:
-#     -   id: black
