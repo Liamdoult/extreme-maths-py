@@ -2,6 +2,7 @@ import collections
 import csv
 import time
 
+import pytest
 import torch
 import numpy as np
 import terminaltables
@@ -9,41 +10,42 @@ from tqdm import tqdm
 import termcolor
 
 from extreme_maths.vectors import EMVector
-from extreme_maths.vectors import EMVectorCuda
-from extreme_maths.vectors import EMVectorOCL
-from extreme_maths.vectors import EMVectorThreaded
 
 
 def add(a, b):
-    c = a + b
+    return a + b
 
 
 def iadd(a, b):
     a += b
+    return a
 
 
 def sub(a, b):
-    c = a + b
+    return a - b
 
 
 def isub(a, b):
-    a += b
+    a -= b
+    return a
 
 
 def mul(a, b):
-    c = a + b
+    return a * b
 
 
 def imul(a, b):
-    a += b
+    a *= b
+    return a
 
 
 def div(a, b):
-    c = a + b
+    return a / b
 
 
 def idiv(a, b):
-    a += b
+    a /= b
+    return a
 
 
 operations = [add, iadd, sub, isub, mul, imul, div, idiv]
@@ -60,22 +62,10 @@ testers = [{
     "_id": "EMVector",
     "name": "Extreme Math Vector",
     "constructor": EMVector,
-}, {
-    "_id": "EMVectorCuda",
-    "name": "Extreme Math Vector CUDA",
-    "constructor": EMVectorCuda,
-}, {
-    "_id": "EMVectorOCL",
-    "name": "Extreme Math Vector OpenCL",
-    "constructor": EMVectorOCL,
-}, {
-    "_id": "EMVectorThreaded",
-    "name": "Extreme Math Vector Threaded",
-    "constructor": EMVectorThreaded,
 }]
 
 
-def score(n):
+def score(n, m=1, k=1000):
     all_results = {}
     for tester in testers:
         print(f"Starting {tester['name']}")
@@ -84,22 +74,21 @@ def score(n):
             "operations": collections.defaultdict(float),
         }
 
-        for i in tqdm(range(n)):
-            for _ in range(n - i):
-                a = [1.0] * (10**i)
-                b = [2.0] * (10**i)
+        a = [0.1] * (10**n)
+        b = [0.2] * (10**n)
+        for _ in tqdm(range(m)):
+            for op in operations:
+                # timed array generation
+                start = time.time()
+                ap = tester["constructor"](a)
+                bp = tester["constructor"](b)
+                results["generation"] += time.time() - start
 
-                for op in operations:
-                    # timed array generation
-                    start = time.time()
-                    ap = tester["constructor"](a)
-                    bp = tester["constructor"](b)
-                    results["generation"] += time.time() - start
-
-                    # timed computation
-                    start = time.time()
-                    res = op(ap, bp)
-                    results["operations"][op.__name__] += time.time() - start
+                # timed computation
+                start = time.time()
+                for _ in range(k):
+                    ap = op(ap, bp)
+                results["operations"][op.__name__] += time.time() - start
         all_results[tester["_id"]] = results
 
     return all_results
@@ -120,28 +109,32 @@ def color(row):
     return row
 
 
+@pytest.mark.last
 def test_perf():
-    n = 9
+    for i in range(1, 7):
+        n = i
+        m = 5
 
-    results = score(n)
+        results = score(n, m)
 
-    ids = [tester["_id"] for tester in testers]
+        ids = [tester["_id"] for tester in testers]
 
-    table_data = []
-    table_data.append(["operation"] + ids)
-    table_data.append(["_gen_"] + [results[id]["generation"] for id in ids])
-    for op in operations:
-        res = [results[id]["operations"][op.__name__] for id in ids]
-        table_data.append([op.__name__] + res)
+        table_data = []
+        table_data.append(["operation"] + ids)
+        table_data.append(["_gen_"] +
+                          [results[id]["generation"] for id in ids])
+        for op in operations:
+            res = [results[id]["operations"][op.__name__] for id in ids]
+            table_data.append([op.__name__] + res)
 
-    with open(".results.csv", "w+") as my_csv:
-        csvWriter = csv.writer(my_csv, delimiter=',')
-        csvWriter.writerows(table_data)
+        with open(f".results/{n}.csv", "w+") as my_csv:
+            csvWriter = csv.writer(my_csv, delimiter=',')
+            csvWriter.writerows(table_data)
 
-    table_data = [table_data[0]] + [[row[0]] + color(row[1:])
-                                    for row in table_data[1:]]
+        table_data = [table_data[0]] + [[row[0]] + color(row[1:])
+                                        for row in table_data[1:]]
 
-    table = terminaltables.AsciiTable(table_data)
-    print(table.table)
+        table = terminaltables.AsciiTable(table_data)
+        print(table.table)
 
     return
