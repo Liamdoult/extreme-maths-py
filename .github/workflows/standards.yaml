@@ -29,9 +29,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: test
+      run: |
+       curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest
+       curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz"
+       curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3
+       curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3 | tr -d \"
+       curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi -
     - name: download generic binary
       run: |
-        'curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi -'
+          curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+    - name: decompress
+      run: |
         ls .
         tar -xf libem.tar.gz -C ./src/extreme_maths/
     - name: Set up Python ${{ matrix.python-version }}
