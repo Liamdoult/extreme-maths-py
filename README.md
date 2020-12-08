@@ -8,6 +8,10 @@ The plan... simple. Be faster.
 
 ## Testing
 
-All tests are written in with pytest. You can simply run the test suite with tox:
+All tests are written in with pytest. You need to build `extreme_maths_c` and copy the `libem.so` binary into `src/extreme_maths/` to use or test the library.
 
     $ tox
+
+To run the benchmark test (Not run by default):
+
+    pytest -s -v test/test_perf.py
