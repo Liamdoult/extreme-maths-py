@@ -31,7 +31,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: download generic binary
       run: |
-          curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -i -
+          curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d '"' -f 4 | wget -i -
     - name: decompress
       run: |
         ls .
