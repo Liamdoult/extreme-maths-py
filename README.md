@@ -4,7 +4,7 @@
 
 The plan... simple. Be faster.
 
-![Average speed compared to Numpy and Pytorch](https://github.com/Liamdoult/extreme-maths-py/docs/average.png")
+![Average speed compared to Numpy and Pytorch](https://github.com/Liamdoult/extreme-maths-py/blob/master/docs/average.png)
 
 ## Testing
 
