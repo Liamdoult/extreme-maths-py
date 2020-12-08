@@ -6,9 +6,6 @@ import numpy as np
 import torch
 
 from extreme_maths.vectors import EMVector
-from extreme_maths.vectors import EMVectorCuda
-from extreme_maths.vectors import EMVectorOCL
-from extreme_maths.vectors import EMVectorThreaded
 
 
 class TestEMVector(unittest.TestCase):
@@ -169,15 +166,3 @@ class TestEMVector(unittest.TestCase):
         v_res = v1.result()
 
         np.testing.assert_allclose(np_res, v_res, rtol=1e-5, atol=0)
-
-
-class TestEMVectorCuda(TestEMVector):
-    cls = EMVectorCuda
-
-
-class TestEMVectorOCL(TestEMVector):
-    cls = EMVectorOCL
-
-
-class TestEMVectorThreaded(TestEMVector):
-    cls = EMVectorThreaded
