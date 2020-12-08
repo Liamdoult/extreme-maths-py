@@ -29,14 +29,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: download generic binary
+      run: |
+        $(curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi -)
+        ls .
+        tar -xf libem.tar.gz -C ./src/extreme_maths/
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: download generic binary
-      run: |
-        curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "libem.tar.gz" | cut -d : -f 2,3 | tr -d \" | wget -qi -
-        tar -xf libem.tar.gz -C ./src/extreme_maths/
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
