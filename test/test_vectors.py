@@ -5,14 +5,11 @@ import pytest
 import numpy as np
 import torch
 
-from extreme_maths.vectors import EMVector
-from extreme_maths.vectors import EMVectorCuda
-from extreme_maths.vectors import EMVectorOCL
-from extreme_maths.vectors import EMVectorThreaded
+from extreme_maths.vectors import vector
 
 
 class TestEMVector(unittest.TestCase):
-    cls = EMVector
+    cls = vector
 
     def test_add(self):
         arr1 = [random.random() for _ in range(100)]
@@ -27,8 +24,9 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.add(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-5, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
+
         v_res = (v1 + v2).result()
 
         np.testing.assert_allclose(np_res, v_res, rtol=1e-5, atol=0)
@@ -46,8 +44,8 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.add(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-5, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
         v1 += v2
         v_res = v1.result()
 
@@ -66,8 +64,8 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.sub(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-4, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
         v_res = (v1 - v2).result()
 
         np.testing.assert_allclose(np_res, v_res, rtol=1e-4, atol=0)
@@ -85,8 +83,8 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.sub(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-4, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
         v1 -= v2
         v_res = v1.result()
 
@@ -105,8 +103,8 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.mul(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-5, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
         v_res = (v1 * v2).result()
 
         np.testing.assert_allclose(np_res, v_res, rtol=1e-5, atol=0)
@@ -124,8 +122,8 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.mul(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-5, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
         v1 *= v2
         v_res = v1.result()
 
@@ -144,8 +142,8 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.div(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-5, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
         v_res = (v1 / v2).result()
 
         np.testing.assert_allclose(np_res, v_res, rtol=1e-5, atol=0)
@@ -163,21 +161,9 @@ class TestEMVector(unittest.TestCase):
         t_res = torch.div(t1, t2)
         np.testing.assert_allclose(np_res, t_res, rtol=1e-5, atol=0)
 
-        v1 = self.cls(arr1)
-        v2 = self.cls(arr2)
+        v1 = vector(arr1)
+        v2 = vector(arr2)
         v1 /= v2
         v_res = v1.result()
 
         np.testing.assert_allclose(np_res, v_res, rtol=1e-5, atol=0)
-
-
-class TestEMVectorCuda(TestEMVector):
-    cls = EMVectorCuda
-
-
-class TestEMVectorOCL(TestEMVector):
-    cls = EMVectorOCL
-
-
-class TestEMVectorThreaded(TestEMVector):
-    cls = EMVectorThreaded
