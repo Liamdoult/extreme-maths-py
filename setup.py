@@ -7,7 +7,7 @@ with open(path.join(setup_file_location, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='extreme_maths', # Change here
-    version='0.0.2',
+    version='0.1.0',
     description='',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -36,6 +36,7 @@ setup(
         'tests': [
             "pytest",
             "pytest-cov",
+            "pytest-ordering",
             "numpy",
             "torch",
             "tqdm",

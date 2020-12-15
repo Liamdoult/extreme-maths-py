@@ -15,9 +15,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint yapf
-    - name: Test with pylint
-      run: pylint src
+        pip install yapf
     - name: Test with yapf
       run: yapf -d -r src | wc -l | tr -s ' '
 
@@ -31,6 +29,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: download generic binary
+      run: |
+          curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "/libem.tar.gz" | cut -d '"' -f 4 | wget -i -
+    - name: decompress
+      run: |
+        ls .
+        tar -xf libem.tar.gz -C ./src/extreme_maths/
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
