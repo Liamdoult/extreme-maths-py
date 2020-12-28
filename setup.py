@@ -33,7 +33,13 @@ setup(
     include_package_data=True,
     python_requires='>=3.5, <4',
     install_requires=["cython"],
-    ext_modules = cythonize([Extension("vectors", ["src/extreme_maths/vectors.pyx", "c/src/vector.c"], extra_compile_args = ["-I./c/include", "-O3"],)]),
+    ext_modules = cythonize(
+        [Extension(
+            "vectors", ["src/extreme_maths/vectors.pyx", "c/src/vector.c"],
+            extra_compile_args = ["-I./c/include", "-O3"],
+            language="c",
+        )]
+    ),
     extras_require={
         'dev': ['check-manifest'],
         'tests': [
