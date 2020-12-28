@@ -42,8 +42,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        ls .
-        pwd
+        ls ./src/extreme_maths/
         python -m pip install --upgrade pip
         pip install tox tox-gh-actions cython
     - name: Test with tox
