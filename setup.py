@@ -35,7 +35,7 @@ setup(
     install_requires=["Cython"],
     ext_modules = cythonize(
         [Extension(
-            "vectors", ["src/extreme_maths/vectors.pyx", "c/src/vector.c"],
+            "vectors", ["./src/extreme_maths/vectors.pyx", "./c/src/vector.c"],
             extra_compile_args = ["-I./c/include", "-O3"],
             language="c",
         )]
