@@ -1,5 +1,7 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
 from os import path
+
+from Cython.Build import cythonize
 
 setup_file_location = path.abspath(path.dirname(__file__))
 with open(path.join(setup_file_location, 'README.md'), encoding='utf-8') as f:
@@ -30,7 +32,8 @@ setup(
     packages=find_packages(where='src'),
     include_package_data=True,
     python_requires='>=3.5, <4',
-    install_requires=[],
+    install_requires=["cython"],
+    ext_modules = cythonize([Extension("vectors", ["src/extreme_maths/vectors.pyx", "c/src/vector.c"], extra_compile_args = ["-I./c/include"],)]),
     extras_require={
         'dev': ['check-manifest'],
         'tests': [

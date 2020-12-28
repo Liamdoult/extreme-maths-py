@@ -9,7 +9,7 @@ import terminaltables
 from tqdm import tqdm
 import termcolor
 
-from extreme_maths.vectors import vector
+from vectors import vector
 
 
 def add(a, b):
@@ -103,12 +103,16 @@ testers = [{
     "_id": "native",
     "name": "Native Python",
     "constructor": Native,
+    "max": 3,
 }]
 
 
 def score(n, m=1, k=1000):
     all_results = {}
     for tester in testers:
+        if "max" in tester and tester["max"] < n:
+            continue
+
         print(f"Starting {tester['name']}")
         results = {
             "generation": 0,
@@ -152,7 +156,7 @@ def color(row):
 
 @pytest.mark.last
 def test_perf():
-    for i in range(1, 4):
+    for i in range(1, 7):
         n = i
         m = 5
 
@@ -163,9 +167,12 @@ def test_perf():
         table_data = []
         table_data.append(["operation"] + ids)
         table_data.append(["_gen_"] +
-                          [results[id]["generation"] for id in ids])
+                          [results[id]["generation"] for id in results.keys()])
         for op in operations:
-            res = [results[id]["operations"][op.__name__] for id in ids]
+            res = [
+                results[id]["operations"][op.__name__]
+                for id in results.keys()
+            ]
             table_data.append([op.__name__] + res)
 
         with open(f".results/{n}.csv", "w+") as my_csv:

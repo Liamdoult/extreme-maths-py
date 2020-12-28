@@ -6,6 +6,12 @@ The plan... simple. Be faster.
 
 ![Average speed compared to Numpy and Pytorch](https://github.com/Liamdoult/extreme-maths-py/blob/master/docs/average.png)
 
+## Build
+
+Build Cython libraries:
+
+    python setup.py build_ext -i
+
 ## Testing
 
 All tests are written in with pytest. You need to build `extreme_maths_c` and copy the `libem.so` binary into `src/extreme_maths/` to use or test the library.
