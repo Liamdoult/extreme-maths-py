@@ -8,7 +8,17 @@ The plan... simple. Be faster.
 
 ## Build
 
-Build Cython libraries:
+Building the library requires `Cython`:
+
+    pip install cython
+
+You will also require python dev tools for any versions you compile:
+
+    sudo apt-get install python<version>-dev
+
+Or your platform equivalent.
+
+__To build Cython libraries:__
 
     python setup.py build_ext -i
 
