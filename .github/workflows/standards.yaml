@@ -30,7 +30,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Checkout submodules
-      run: git submodule update --init --recursive
+      run: git clone https://github.com/Liamdoult/extreme-maths-c c
     - name: download generic binary
       run: |
           curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "/libem.tar.gz" | cut -d '"' -f 4 | wget -i -
