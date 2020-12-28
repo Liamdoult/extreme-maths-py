@@ -1,1 +1,1 @@
-recursive-include src/ *.so
+recursive-include src/ *.so *.pyx *.pxd
