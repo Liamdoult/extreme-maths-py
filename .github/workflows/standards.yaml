@@ -29,6 +29,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Checkout submodules
+      run: git clone https://github.com/Liamdoult/extreme-maths-c c
     - name: download generic binary
       run: |
           curl -s https://api.github.com/repos/Liamdoult/extreme-maths-c/releases/latest | grep "/libem.tar.gz" | cut -d '"' -f 4 | wget -i -
@@ -42,7 +44,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        ls ./src/extreme_maths/
         python -m pip install --upgrade pip
-        pip install tox tox-gh-actions
+        pip install tox tox-gh-actions cython
     - name: Test with tox
       run: tox
