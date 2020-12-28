@@ -6,7 +6,6 @@ import pytest
 import numpy as np
 import torch
 
-# from extreme_maths.vectors import vector, small_vector
 from vectors import vector
 
 

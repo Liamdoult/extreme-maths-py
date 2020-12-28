@@ -32,7 +32,7 @@ setup(
     packages=find_packages(where='src'),
     include_package_data=True,
     python_requires='>=3.5, <4',
-    install_requires=["cython"],
+    install_requires=["Cython"],
     ext_modules = cythonize(
         [Extension(
             "vectors", ["src/extreme_maths/vectors.pyx", "c/src/vector.c"],

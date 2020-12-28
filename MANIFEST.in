@@ -1,3 +1,1 @@
-global-include *.pyx *.pxd *.c *.h
-
 recursive-include src/ *.so
